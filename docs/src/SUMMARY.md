@@ -14,4 +14,4 @@
     * [Step3: Deploy Operator onto the cluster](tutorial/deploy_operator.md)
 * [Operator source code](operator_source_code/README.md)
     * [Controllers and Reconcilers](operator_source_code/controller_reconciler.md)
-
+* [Craft CLI](craft_cli.md)

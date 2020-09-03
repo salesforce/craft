@@ -1,92 +1,29 @@
-# Resource.json - What does it do?
+# Creating the Operator using CRAFT
 
-Resource.json contains the schema information for validating inputs while creating the CRD. The resource.json has a list of properties and required attributes for a certain operator which should be followed by the input. The scaffold of resource.json looks like this.
+Now that we have created controller.json, resource.json and the DockerFile, let's create the Operator using CRAFT.
 
-    "type": "object"
-    "properties": {},
-    "required": [],
-
-The properties field contains the field name, data type and the data patterns. The required field contains the data names which are mandatory for the operator to be created.
-
-Note : Resource.json is same for an operator, irrespective of who the developer is. Even though controller.json can vary for an operator, resource.json must stay the same.
-
-To populate resource.json, we need to go through the resource code and identify the required fields and their properties.
-The resource.json for Wordpress looks like this:
-
+First, let us check whether CRAFT is working in our machine.
 ```
-  "type": "object",
-  "properties": {
-    "bootstrap_email": {
-      "pattern": "^(.*)$",
-      "type": "string"
-    },
-    "bootstrap_password": {
-      "pattern": "^(.*)$",
-      "type": "string"
-    },
-    "bootstrap_title": {
-      "pattern": "^(.*)$",
-      "type": "string"
-    },
-    "bootstrap_url": {
-      "pattern": "^(.*)$",
-      "type": "string"
-    },
-    "bootstrap_user": {
-      "pattern": "^(.*)$",
-      "type": "string"
-    },
-    "db_password": {
-      "pattern": "^(.*)$",
-      "type": "string"
-    },
-    "dbVolumeMount": {
-      "pattern": "^(.*)$",
-      "type": "string"
-    },
-    "host": {
-      "pattern": "^(.*)$",
-      "type": "string"
-    },
-    "instance": {
-      "enum": [
-          "prod",
-          "dev"
-      ],
-      "type": "string"
-    },
-    "name": {
-      "pattern": "^(.*)$",
-      "type": "string"
-    },
-    "replicas": {
-      "format": "int64",
-      "type": "integer",
-      "minimum": 1,
-      "maximum": 5
-    },
-    "user": {
-      "pattern": "^(.*)$",
-      "type": "string"
-    },
-    "wordpressVolumeMount": {
-      "pattern": "^(.*)$",
-      "type": "string"
-    }
-  },
-  "required": [
-    "bootstrap_email",
-    "bootstrap_password",
-    "bootstrap_title",
-    "bootstrap_url",
-    "bootstrap_user",
-    "db_password",
-    "dbVolumeMount",
-    "host",
-    "instance",
-    "name",
-    "replicas",
-    "user",
-    "wordpressVolumeMount"
-  ]
+$ craft version
 ```
+This should display the version and other info regarding CRAFT.
+
+---
+***!TIP***
+
+ If this gives an error saying "$GOPATH is not set", then set GOPATH to the location where you've installed Go.
+
+---
+
+Now that we have verified that CRAFT is working properly, creating the Operator with CRAFT is a fairly straight forward process:
+```
+craft create -c config/controller.json -r config/resource.json \
+--podDockerFile resource/DockerFile -p
+```
+---
+***NOTE***
+
+If the execution in the terminal stops at a certain point, do not assume that it has hanged. The command takes a little while to execute, so give it some time.
+
+---
+This will create the Operator template in $GOPATH/src, build operator.yaml for deployment, build and push Docker images for operator and resource. We shall see what these are individually in the next section.
