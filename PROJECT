@@ -1,0 +1,7 @@
+domain: my.domain
+repo: example
+resources:
+- group: mygroup
+  kind: MyResource
+  version: v1
+version: "2"

@@ -1,0 +1,7 @@
+secretGenerator:
+- name: mysql-pass-{{ instance }}
+  literals:
+  - password={{ db_password }}
+resources:
+- mysql-deployment.yaml
+- wordpress-deployment.yaml

@@ -1,0 +1,395 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  labels:
+    control-plane: controller-manager
+  name: craft
+spec: {}
+status: {}
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.5
+  creationTimestamp: null
+  name: wordpressapis.wordpress.example.com
+spec:
+  group: wordpress.example.com
+  names:
+    kind: WordpressAPI
+    listKind: WordpressAPIList
+    plural: wordpressapis
+    singular: wordpressapi
+  scope: Namespaced
+  validation:
+    openAPIV3Schema:
+      description: WordpressAPI is the Schema for the WordpressAPIs API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            bootstrap_email:
+              pattern: ^(.*)$
+              type: string
+            bootstrap_password:
+              pattern: ^(.*)$
+              type: string
+            bootstrap_title:
+              pattern: ^(.*)$
+              type: string
+            bootstrap_url:
+              pattern: ^(.*)$
+              type: string
+            bootstrap_user:
+              pattern: ^(.*)$
+              type: string
+            db_password:
+              pattern: ^(.*)$
+              type: string
+            dbVolumeMount:
+              pattern: ^(.*)$
+              type: string
+            host:
+              pattern: ^(.*)$
+              type: string
+            instance:
+              enum:
+              - prod
+              - dev
+              type: string
+            name:
+              pattern: ^(.*)$
+              type: string
+            replicas:
+              format: int64
+              maximum: 5
+              minimum: 1
+              type: integer
+            user:
+              pattern: ^(.*)$
+              type: string
+            wordpressVolumeMount:
+              pattern: ^(.*)$
+              type: string
+          required:
+          - bootstrap_email
+          - bootstrap_password
+          - bootstrap_title
+          - bootstrap_url
+          - bootstrap_user
+          - db_password
+          - dbVolumeMount
+          - host
+          - instance
+          - name
+          - replicas
+          - user
+          - wordpressVolumeMount
+          type: object
+        status:
+          description: WordpressAPIStatus defines the observed state of WordpressAPI
+          properties:
+            message:
+              type: string
+            pod:
+              properties:
+                name:
+                  type: string
+                namespace:
+                  type: string
+                type:
+                  type: string
+              type: object
+            state:
+              type: string
+            statusPayload:
+              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                of cluster Important: Run "make" to regenerate code after modifying
+                this file'
+              type: string
+            terminated:
+              description: ContainerStateTerminated is a terminated state of a container.
+              properties:
+                containerID:
+                  description: Container's ID in the format 'docker://<container_id>'
+                  type: string
+                exitCode:
+                  description: Exit status from the last termination of the container
+                  format: int32
+                  type: integer
+                finishedAt:
+                  description: Time at which the container last terminated
+                  format: date-time
+                  type: string
+                message:
+                  description: Message regarding the last termination of the container
+                  type: string
+                reason:
+                  description: (brief) reason from the last termination of the container
+                  type: string
+                signal:
+                  description: Signal from the last termination of the container
+                  format: int32
+                  type: integer
+                startedAt:
+                  description: Time at which previous execution of the container started
+                  format: date-time
+                  type: string
+              required:
+              - exitCode
+              type: object
+          type: object
+      type: object
+  version: v1
+  versions:
+  - name: v1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: null
+  name: wordpress-leader-election-role
+  namespace: craft
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - configmaps/status
+  verbs:
+  - get
+  - update
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: wordpress-manager-role
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - events
+  - pods
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apps
+  - extensions
+  resources:
+  - deployments
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - wordpress.example.com
+  resources:
+  - wordpressapis
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - wordpress.example.com
+  resources:
+  - wordpressapis/status
+  verbs:
+  - get
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: wordpress-proxy-role
+rules:
+- apiGroups:
+  - authentication.k8s.io
+  resources:
+  - tokenreviews
+  verbs:
+  - create
+- apiGroups:
+  - authorization.k8s.io
+  resources:
+  - subjectaccessreviews
+  verbs:
+  - create
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: wordpress-metrics-reader
+rules:
+- nonResourceURLs:
+  - /metrics
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  creationTimestamp: null
+  name: wordpress-leader-election-rolebinding
+  namespace: craft
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: wordpress-leader-election-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: craft
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: null
+  name: wordpress-manager-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: wordpress-manager-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: craft
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: null
+  name: wordpress-proxy-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: wordpress-proxy-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: craft
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    control-plane: controller-manager
+  name: wordpress-controller-manager-metrics-service
+  namespace: craft
+spec:
+  ports:
+  - name: https
+    port: 8443
+    targetPort: https
+  selector:
+    control-plane: controller-manager
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    control-plane: controller-manager
+  name: wordpress-controller-manager
+  namespace: craft
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      control-plane: controller-manager
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        control-plane: controller-manager
+    spec:
+      containers:
+      - args:
+        - --metrics-addr=127.0.0.1:8080
+        - --enable-leader-election
+        command:
+        - /manager
+        image: craftsf/wordpress-operator:v0.0.1
+        name: manager
+        resources:
+          limits:
+            cpu: 100m
+            memory: 30Mi
+          requests:
+            cpu: 100m
+            memory: 20Mi
+      - args:
+        - --secure-listen-address=0.0.0.0:8443
+        - --upstream=http://127.0.0.1:8080/
+        - --logtostderr=true
+        - --v=10
+        image: gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+        name: kube-rbac-proxy
+        ports:
+        - containerPort: 8443
+          name: https
+        resources: {}
+      imagePullSecrets:
+      - {}
+      terminationGracePeriodSeconds: 10
+status: {}

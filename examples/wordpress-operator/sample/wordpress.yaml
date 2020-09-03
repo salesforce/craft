@@ -1,0 +1,20 @@
+apiVersion: wordpress.example.com/v1
+kind: WordpressAPI
+metadata:
+  name: wordpress-dev
+  namespace: craft
+spec:
+  # Add fields here
+  instance: dev
+  replicas: 1
+  host: mysite-mysql
+  user: user
+  db_password: testpassfordemo 
+  name: wordpress
+  dbVolumeMount: /var/www/mysql-dev
+  wordpressVolumeMount: /var/www/html
+  bootstrap_title: "DEV"
+  bootstrap_user: "admin"
+  bootstrap_password: testpassfordemo 
+  bootstrap_url: "http://localhost:9090"
+  bootstrap_email: "info@example.com"

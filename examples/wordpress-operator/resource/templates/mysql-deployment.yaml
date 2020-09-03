@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-mysql-{{ instance }}
+  labels:
+    Confidentiality: Internal
+    app: wordpress-{{ instance }}
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: wordpress-{{ instance }}
+    tier: mysql
+  clusterIP: None
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim-{{ instance }}
+  labels:
+    Confidentiality: Internal
+    app: wordpress-{{ instance }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: wordpress-mysql-{{ instance }}
+  labels:
+    Confidentiality: Internal
+    app: wordpress-{{ instance }}
+spec:
+  selector:
+    matchLabels:
+      app: wordpress-{{ instance }}
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress-{{ instance }}
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql-{{ instance }}
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass-{{ instance }}
+              key: password
+        ports:
+        - containerPort: 3306
+          name: mysql-{{ instance }}
+        volumeMounts:
+        - name: mysql-persistent-storage-{{ instance }}
+          mountPath: {{ dbVolumeMount }}
+      volumes:
+      - name: mysql-persistent-storage-{{ instance }}
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim-{{ instance }}

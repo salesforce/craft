@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-{{ instance }}
+  labels:
+    Confidentiality: Internal
+    app: wordpress-{{ instance }}
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: wordpress-{{ instance }}
+    tier: frontend
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wp-pv-claim-{{ instance }}
+  labels:
+    Confidentiality: Internal
+    app: wordpress-{{ instance }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: wordpress-{{ instance }}
+  labels:
+    Confidentiality: Internal
+    app: wordpress-{{ instance }}
+spec:
+  replicas: {{ replicas }}
+  selector:
+    matchLabels:
+      app: wordpress-{{ instance }}
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress-{{ instance }} 
+        tier: frontend
+    spec:
+      containers:
+      - image: wordpress:4.8-apache
+        name: wordpress
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: wordpress-mysql-{{ instance }} 
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass-{{ instance }}
+              key: password
+        ports:
+        - containerPort: 80
+          name: wordpress-{{ instance }}
+        volumeMounts:
+        - name: wordpress-persistent-storage-{{ instance }}
+          mountPath: {{ wordpressVolumeMount }}
+        - name: initwordpress-{{ instance }}
+          mountPath: /scripts
+      volumes:
+      - name: wordpress-persistent-storage-{{ instance }}
+        persistentVolumeClaim:
+          claimName: wp-pv-claim-{{ instance }}
+      - name: initwordpress-{{ instance }}
+        configMap:
+          name: initwordpress-{{ instance }}
+          defaultMode: 0744

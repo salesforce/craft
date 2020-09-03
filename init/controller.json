@@ -1,0 +1,17 @@
+{
+    "group": "",
+    "resource": "",
+    "repo": "",
+    "domain": "",
+    "namespace": "",
+    "version": "",
+    "operator_image": "",
+    "image": "",
+    "imagePullSecrets": "",
+    "imagePullPolicy": "",
+    "cpu_limit": "",
+    "memory_limit": "",
+    "vault_addr": "",
+    "runOnce": "",
+    "reconcileFreq": ""
+}
