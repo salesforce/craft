@@ -1,0 +1,694 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>CRAFT</title>
+        
+        <meta name="robots" content="noindex" />
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="quick_setup/index.html"><strong aria-hidden="true">2.</strong> Quickstart</a></li><li class="chapter-item expanded "><a href="tutorial/index.html"><strong aria-hidden="true">3.</strong> Wordpress Operator Tutorial</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tutorial/step1.html"><strong aria-hidden="true">3.1.</strong> Step 1: Create the Custom Resource Files and Docker Image</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tutorial/controller_file.html"><strong aria-hidden="true">3.1.1.</strong> Controller.json</a></li><li class="chapter-item expanded "><a href="tutorial/resource_file.html"><strong aria-hidden="true">3.1.2.</strong> Resource.json</a></li><li class="chapter-item expanded "><a href="tutorial/resource_dockerfile.html"><strong aria-hidden="true">3.1.3.</strong> Resource DockerFile</a></li><li class="chapter-item expanded "><a href="tutorial/docker_exit_codes.html"><strong aria-hidden="true">3.1.4.</strong> CRUD operations Exit Codes</a></li></ol></li><li class="chapter-item expanded "><a href="tutorial/step2.html"><strong aria-hidden="true">3.2.</strong> Step 2: Create an Operator</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tutorial/namespace_file.html"><strong aria-hidden="true">3.2.1.</strong> Namespace.yaml</a></li><li class="chapter-item expanded "><a href="tutorial/operator_file.html"><strong aria-hidden="true">3.2.2.</strong> Operator.yaml</a></li></ol></li><li class="chapter-item expanded "><a href="tutorial/deploy_operator.html"><strong aria-hidden="true">3.3.</strong> Step3: Deploy Operator onto the cluster</a></li></ol></li><li class="chapter-item expanded "><a href="operator_source_code/index.html"><strong aria-hidden="true">4.</strong> Operator source code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="operator_source_code/controller_reconciler.html"><strong aria-hidden="true">4.1.</strong> Controllers and Reconcilers</a></li></ol></li><li class="chapter-item expanded "><a href="craft_cli.html"><strong aria-hidden="true">5.</strong> Craft CLI</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">CRAFT</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#introduction-to-craft" id="introduction-to-craft">Introduction to CRAFT</a></h1>
+<p>CRAFT (Custom Resource Abstraction and Fabrication Tool) declares Kubernetes operators in a robust, idempotent, and generic way for any resource. </p>
+<p>Creating a Kubernetes operator requires domain knowledge of abstraction and expertise in Kubernetes and Golang. With CRAFT you can create operators without a dependent layer and in the language of your choice! </p>
+<p>Declare your custom resource in JSON files and let CRAFT generate all the files needed to deploy your operator into the cluster. CRAFT Wordpress operator generates 571 lines of code for you, a task that otherwise takes a few months to complete. </p>
+<p>Reduce your workload by automating resource reconciliation with CRAFT to ensure your resource stays in its desired state. CRAFT also performs schema validations on your custom resource while creating the operator. Through automated reconciliation and schema validations, CRAFT achieves the objectives listed in the <a href="https://github.com/kubernetes/community/blob/master/contributors/design-proposals/architecture/declarative-application-management.md#bespoke-application-deployment">Kubernetes Architecture Design Proposal</a>.</p>
+<h2><a class="header" href="#advantages-of-using-craft" id="advantages-of-using-craft">Advantages of using Craft</a></h2>
+<ol>
+<li><strong>Easy onboarding</strong> : Create an operator in your language of choice.</li>
+<li><strong>Segregation of duties</strong> : Developers can work in the docker file while the Site Reliability or DevOps engineer can declaratively configure the operator.</li>
+<li><strong>Control access</strong> : Control which users have access to the operator resources.</li>
+<li><strong>Versioning and API interface</strong> : Work on a different version of the operator or resource than your users. </li>
+<li><strong>Save time</strong> : Get schema and input validation feedback before runtime. </li>
+<li><strong>Automated reconciliation</strong> : Automate resource reconciliation to lower your maintenance workload. </li>
+<li><strong>Dependent teams work independently</strong> : Dependent teams can automate independently and create abstraction layers on top of your abstraction.</li>
+</ol>
+<h2><a class="header" href="#built-with" id="built-with">Built with</a></h2>
+<p>CRAFT is built with open source projects Kubebuilder and Operatify:</p>
+<ul>
+<li><strong>Kubebuilder</strong> : CRAFT augments the operator skeleton generated by Kubebuilder with custom resource definitions and controller capabilities. </li>
+<li><strong>Operatify</strong> : CRAFT leverages Operatify’s automated reconciliation capabilities.</li>
+</ul>
+<h1><a class="header" href="#quick-setup" id="quick-setup">Quick Setup</a></h1>
+<h2><a class="header" href="#prerequisites" id="prerequisites">Prerequisites</a></h2>
+<ul>
+<li><a href="https://golang.org/dl/">Go</a> version v1.13+</li>
+<li><a href="https://docs.docker.com/get-docker/">Docker</a> version 17.03+</li>
+<li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">Kubectl</a> version v1.11.3+</li>
+<li><a href="https://kubernetes-sigs.github.io/kustomize/installation/">Kustomize</a> version v3.1.0+</li>
+<li><a href="https://book.kubebuilder.io/quick-start.html#installation">Kubebuilder</a> version v2.0.0+</li>
+</ul>
+<h2><a class="header" href="#installation" id="installation">Installation</a></h2>
+<pre><code># dowload latest craft binary from releases and extract 
+curl -L https://github.com/salesforce/craft/releases/download/0.1.7/craft.tar.gz | tar -xz -C /tmp/
+
+# move to a path that you can use for long term
+sudo mv /tmp/craft /usr/local/craft
+export PATH=$PATH:/usr/local/craft/bin
+</code></pre>
+<p>Instead of having to add to PATH everytime you open a new terminal, we can add our path to PATH permanently.</p>
+<pre><code>$ sudo vim /etc/paths
+</code></pre>
+<p>Add the line &quot;/usr/local/craft/bin&quot; at the end of the file and save the file.</p>
+<h2><a class="header" href="#create-a-craft-application" id="create-a-craft-application">Create a CRAFT Application</a></h2>
+<p>From the command line, <strong>cd</strong> into a directory where you'd like to store your CRAFT application and run this command:</p>
+<pre><code>craft init
+</code></pre>
+<p>This will initiate a CRAFT application in your current directory and create the following skeleton files:</p>
+<ul>
+<li>controller.json: This file holds Custom Resource Definition (CRD) information like group, domain, operator image, and reconciliation frequency.</li>
+<li>resource.json: This file contains the schema information for validating inputs while creating the CRD.</li>
+</ul>
+<h2><a class="header" href="#next-steps" id="next-steps">Next Steps</a></h2>
+<p>Follow the Wordpress operator tutorial to understand how to use CRAFT to create and deploy an operator into a cluster. This deep-dive tutorial demonstrates the entire scope and scale of a CRAFT application.</p>
+<h1><a class="header" href="#tutorial--wordpress-operator" id="tutorial--wordpress-operator">Tutorial : Wordpress Operator</a></h1>
+<p>Unlike most tutorials who start with some really contrived setup, or some toy application that gets the basics across, this tutorial will take you through the full extent of the CRAFT application and how it is useful. We start off simple and in the end, build something pretty full-featured and meaningful, namely, an operator for the Wordpress application.</p>
+<p>The job of the Wordpress operator is to host the Wordpress application and perform operations given by the user on the cluster. It reconciles regularly, checking for updates in the resource and therefore, can be termed as level-triggered.</p>
+<p>We will see how the controller.json and resource.json required to run the wordpress operator have been developed. Then, we'll see how to use CRAFT to create the operator and deploy it onto the cluster.</p>
+<p>The config files required to create the operator are already present in <code>example/wordpress-operator</code></p>
+<p>Let's go ahead and see how we have created our files for the wordpress application to understand and generalise this process for any application. First, we start with the controller.json file in the next section.</p>
+<p>The following files are involved in creating a Custom Resource:</p>
+<ul>
+<li>controller.json </li>
+<li>resource.json</li>
+<li>Resource DockerFile</li>
+</ul>
+<h1><a class="header" href="#controllerjson" id="controllerjson">Controller.json</a></h1>
+<p>Custom Resource Definition (CRD) information like the domain, group, image, repository, etc. are stored in the controller.json file. This skeleton file for controller.json is created when you <a href="tutorial/quick_setup/README.html">create a CRAFT application in quickstart</a>: </p>
+<pre><code>&quot;group&quot;: &quot;&quot;,
+&quot;resource&quot;: &quot;&quot;,
+&quot;repo&quot;: &quot;&quot;,
+&quot;domain&quot;: &quot;&quot;,
+&quot;namespace&quot;: &quot;&quot;,
+&quot;version&quot;: &quot;&quot;,
+&quot;operator_image&quot;: &quot;&quot;,
+&quot;image&quot;: &quot;&quot;,
+&quot;imagePullSecrets&quot;: &quot;&quot;,
+&quot;imagePullPolicy&quot;: &quot;&quot;,
+&quot;cpu_limit&quot;: &quot;&quot;,
+&quot;memory_limit&quot;: &quot;&quot;,
+&quot;vault_addr&quot;: &quot;&quot;,
+&quot;runOnce&quot;: &quot;&quot;,
+&quot;reconcileFreq&quot;: &quot;&quot;
+</code></pre>
+<p>This table explains the controller.json attributes:</p>
+<table><thead><tr><th>Attribute</th><th>Description</th><th></th><th></th><th></th></tr></thead><tbody>
+<tr><td>group</td><td>See the Kubernetes API Concepts page for more information.</td><td></td><td></td><td></td></tr>
+<tr><td>resource</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>namespace</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>version</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>repo</td><td>The repo where you want to store the operator template.</td><td></td><td></td><td></td></tr>
+<tr><td>domain</td><td>The domain web address for this project.</td><td></td><td></td><td></td></tr>
+<tr><td>operator_image</td><td>The docker registry files used to push operator image into docker.</td><td></td><td></td><td></td></tr>
+<tr><td>image</td><td>The docker registry files used to push resource image into docker.</td><td></td><td></td><td></td></tr>
+<tr><td>imagePullSecrets</td><td>Restricted data to be stored in the operator like access, permissions, etc.</td><td></td><td></td><td></td></tr>
+<tr><td>imagePullPolicy</td><td>Method of updating images. Default pull policy is IfNotPresent causes Kubelet to skip pulling an image if one already exists.</td><td></td><td></td><td></td></tr>
+<tr><td>cpu_limit</td><td>CPU limit allocated to the operator created.</td><td></td><td></td><td></td></tr>
+<tr><td>memory_limit</td><td>Memory limit allocated to the operator created.</td><td></td><td></td><td></td></tr>
+<tr><td>vault_addr</td><td>Address of the vault.</td><td></td><td></td><td></td></tr>
+<tr><td>runOnce</td><td>If set to 0 reconciliation stops. If set to 1, reconciliation runs according to the specified frequency.</td><td></td><td></td><td></td></tr>
+<tr><td>reconcileFreq</td><td>Frequency interval (in minutes) between two reconciliations.</td><td></td><td></td><td></td></tr>
+</tbody></table>
+<p>Here’s an example of a controller.json file for the Wordpress operator: </p>
+<pre><code>{
+ &quot;group&quot;: &quot;wordpress&quot;,
+  &quot;resource&quot;: &quot;WordpressAPI&quot;,
+  &quot;repo&quot;: &quot;wordpress&quot;,
+  &quot;domain&quot;: &quot;salesforce.com&quot;,
+  &quot;namespace&quot;: &quot;default&quot;,
+  &quot;version&quot;: &quot;v1&quot;,
+  &quot;operator_image&quot;: &quot;ops0-artifactrepo1-0-prd.data.sfdc.net/cco/wordpress-operator&quot;,
+  &quot;image&quot;: &quot;ops0-artifactrepo1-0-prd.data.sfdc.net/cco/wordpress:latest&quot;,
+  &quot;imagePullSecrets&quot;: &quot;registrycredential&quot;,
+  &quot;imagePullPolicy&quot;: &quot;IfNotPresent&quot;,
+  &quot;cpu_limit&quot;: &quot;500m&quot;,
+  &quot;memory_limit&quot;: &quot;200Mi&quot;,
+  &quot;vault_addr&quot;: &quot;http://10.215.194.253:8200&quot;
+}
+</code></pre>
+<h1><a class="header" href="#resourcejson" id="resourcejson">Resource.json</a></h1>
+<p>Resource.json contains the schema information for validating inputs while creating the Custom Resource Definition (CRD). The resource.json has a list of properties and required attributes for a certain operator.</p>
+<pre><code>&quot;type&quot;: &quot;object&quot;
+&quot;properties&quot;: {},
+&quot;required&quot;: [],
+</code></pre>
+<p>The properties field contains the field name, data type and the data patterns. The required field contains the data names which are mandatory for the operator to be created.</p>
+<p>Note: Resource.json remains the same for an operator regardless of the developer. controller.json for an operator may look different for each developer. </p>
+<p>Populate resource.json by identifying required fields and their properties from the resource code. Here’s an example resource.json file for the Wordpress operator:</p>
+<pre><code>  &quot;type&quot;: &quot;object&quot;,
+  &quot;properties&quot;: {
+    &quot;bootstrap_email&quot;: {
+      &quot;pattern&quot;: &quot;^(.*)$&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;bootstrap_password&quot;: {
+      &quot;pattern&quot;: &quot;^(.*)$&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;bootstrap_title&quot;: {
+      &quot;pattern&quot;: &quot;^(.*)$&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;bootstrap_url&quot;: {
+      &quot;pattern&quot;: &quot;^(.*)$&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;bootstrap_user&quot;: {
+      &quot;pattern&quot;: &quot;^(.*)$&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;db_password&quot;: {
+      &quot;pattern&quot;: &quot;^(.*)$&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;dbVolumeMount&quot;: {
+      &quot;pattern&quot;: &quot;^(.*)$&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;host&quot;: {
+      &quot;pattern&quot;: &quot;^(.*)$&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;instance&quot;: {
+      &quot;enum&quot;: [
+          &quot;prod&quot;,
+          &quot;dev&quot;
+      ],
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;name&quot;: {
+      &quot;pattern&quot;: &quot;^(.*)$&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;replicas&quot;: {
+      &quot;format&quot;: &quot;int64&quot;,
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: 1,
+      &quot;maximum&quot;: 5
+    },
+    &quot;user&quot;: {
+      &quot;pattern&quot;: &quot;^(.*)$&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;wordpressVolumeMount&quot;: {
+      &quot;pattern&quot;: &quot;^(.*)$&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;bootstrap_email&quot;,
+    &quot;bootstrap_password&quot;,
+    &quot;bootstrap_title&quot;,
+    &quot;bootstrap_url&quot;,
+    &quot;bootstrap_user&quot;,
+    &quot;db_password&quot;,
+    &quot;dbVolumeMount&quot;,
+    &quot;host&quot;,
+    &quot;instance&quot;,
+    &quot;name&quot;,
+    &quot;replicas&quot;,
+    &quot;user&quot;,
+    &quot;wordpressVolumeMount&quot;
+  ]
+</code></pre>
+<h1><a class="header" href="#resource-dockerfile---how-does-it-help" id="resource-dockerfile---how-does-it-help">Resource DockerFile - How does it help?</a></h1>
+<p>For our Wordpress operator, the resource Dockerfile looks like this:</p>
+<pre><code>FROM centos/python-36-centos7:latest
+
+USER root
+
+RUN pip install --upgrade pip
+RUN python3 -m pip install pyyaml
+RUN python3 -m pip install jinja2
+RUN python3 -m pip install hvac
+
+ADD kubectl kubectl
+RUN chmod +x ./kubectl
+RUN mv ./kubectl /usr/local/bin/kubectl
+
+ARG vault_token=dummy
+ENV VAULT_TOKEN=${vault_token}
+
+ADD templates templates
+
+ADD initwordpress.sh .
+RUN chmod 755 initwordpress.sh
+ADD wordpress_manager.py .
+RUN chmod 755 wordpress_manager.py
+
+RUN find / -perm /6000 -type f -exec chmod a-s {} \; || true
+
+ENTRYPOINT [&quot;python3&quot;, &quot;wordpress_manager.py&quot;]
+</code></pre>
+<p>The above resource Dockerfile for the Wordpress operator has Docker run two files/scripts: </p>
+<ol>
+<li><code>initwordpress.sh</code> : This file contains instructions to initialize the wordpress resource and install the required components. </li>
+<li><code>wordpress_manager.py</code> : This file contains CRUD operations defined by the Wordpress resource. These operations don’t return the usual output, but return exit codes. </li>
+</ol>
+<h1><a class="header" href="#crud-operations-in-craft-operators" id="crud-operations-in-craft-operators">CRUD operations in CRAFT operators</a></h1>
+<p>Define CRUD (Create, Read, Update, and Delete) operations for your operator. This diagram illustrates the flow for the 14 possible outputs of a CRUD operation:</p>
+<p><img src="https://www.stephenzoio.com/images/operator-full-lifecycle.png" alt="operator-full-lifecycle" />
+<em>Credits: Stephen Zoio &amp; his project operatify</em></p>
+<p>With CRAFT, you can account for all the14 cases by using 14 unique docker exit codes. Use these docker exit codes to check the result of the operation and route the path accordingly. The 14 exit codes that CRAFT provides are:</p>
+<pre><code>    201: &quot;Succeeded&quot;, // create or update
+	202: &quot;AwaitingVerification&quot;, // create or update
+	203: &quot;Error&quot;, // create or update
+	211: &quot;Ready&quot;, // verify
+	212: &quot;InProgress&quot;, // verify
+	213: &quot;Error&quot;, // verify
+	214: &quot;Missing&quot;, // verify
+	215: &quot;UpdateRequired&quot;, // verify
+	216: &quot;RecreateRequired&quot;, // verify
+	217: &quot;Deleting&quot;, // verify
+	221: &quot;Succeeded&quot;, // delete
+	222: &quot;InProgress&quot;, // delete
+	223: &quot;Error&quot;, // delete
+	224: &quot;Missing&quot;, // delete
+</code></pre>
+<p>The 14 exit codes are correspondingly mapped to the 14 possibilities that arise from the operations.</p>
+<p>While writing our CRUD operation definitions, we use the exit codes to specify output. For example, in the <code>wordpress_manager.py</code>, we can see the CUD operations:</p>
+<pre><code>def create_wordpress(spec):
+    /*
+    ..
+    */
+    if result.returncode == 0:
+        init_wordpress(spec)
+        sys.exit(201)
+    else:
+        sys.exit(203)
+
+def delete_wordpress(spec):
+    /*
+    ..
+    */
+    if result.returncode == 0:
+        sys.exit(221)
+    else:
+        sys.exit(223)
+
+def update_wordpress(spec):
+    /*
+    ..
+    */
+    if result.returncode == 0:
+        sys.exit(201)
+    else:
+        sys.exit(203)
+
+def verify_wordpress(spec):
+    /*
+    ..
+    */
+    if result.returncode == 0:
+        result = subprocess.run(['kubectl', 'get', 'deployment', 'wordpress-' + spec['instance'],  '-o', 'yaml'], stdout=subprocess.PIPE)
+        deployment_out = yaml.safe_load(result.stdout)
+        if deployment_out['spec']['replicas'] != spec['replicas']:
+            print(&quot;Change in replicas.&quot;)
+            sys.exit(214)
+        sys.exit(211)
+    else:
+        sys.exit(214)
+</code></pre>
+<p>We map the corresponding output possibility to the exit code.</p>
+<p>Now that we have defined our CRUD operations, let's create our operator.</p>
+<h1><a class="header" href="#creating-the-operator-using-craft" id="creating-the-operator-using-craft">Creating the Operator using CRAFT</a></h1>
+<p>Now that we have created controller.json, resource.json and the DockerFile, let's create the Operator using CRAFT.</p>
+<p>First, let us check whether CRAFT is working in our machine.</p>
+<pre><code>$ craft version
+</code></pre>
+<p>This should display the version and other info regarding CRAFT.</p>
+<hr />
+<p><em><strong>!TIP</strong></em></p>
+<p>If this gives an error saying &quot;$GOPATH is not set&quot;, then set GOPATH to the location where you've installed Go.</p>
+<hr />
+<p>Now that we have verified that CRAFT is working properly, creating the Operator with CRAFT is a fairly straight forward process:</p>
+<pre><code>craft create -c config/controller.json -r config/resource.json \
+--podDockerFile resource/DockerFile -p
+</code></pre>
+<hr />
+<p><em><strong>NOTE</strong></em></p>
+<p>If the execution in the terminal stops at a certain point, do not assume that it has hanged. The command takes a little while to execute, so give it some time.</p>
+<hr />
+<p>This will create the Operator template in $GOPATH/src, build operator.yaml for deployment, build and push Docker images for operator and resource. We shall see what these are individually in the next section.</p>
+<h1><a class="header" href="#namespaceyaml" id="namespaceyaml">Namespace.yaml</a></h1>
+<p>The <code>namespace.yaml</code> file contains information about the namespace of the cluster in which you want to deploy the operator. The namespace.yaml for the Wordpress operator looks like this:</p>
+<pre><code>apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    control-plane: controller-manager
+  name: craft
+</code></pre>
+<p>The <code>operator.yaml</code> file contains all the metadata required to deploy the operator into the cluster. It is the backbone of the operator as it contains the schema validations, the specification properties, the API version rules, etc. This file is automatically populated by CRAFT based on the information provided in the controller.json and the resource.json file. The <code>operator.yaml</code> that CRAFT generates for the Wordpress operator can be found at <code>examples/wordpress-operator/config/deploy/operator.yaml</code>.</p>
+<hr />
+<p><em><strong>Note</strong></em></p>
+<p>Our operator's default user corrently holds the minimum <em>rbac</em> required to run the operator and only the operator itself. If you need any more control of the <em>rbac</em> add those permissions in the <code>operator.yaml</code>.</p>
+<hr />
+<h1><a class="header" href="#deploy-operator-onto-the-cluster" id="deploy-operator-onto-the-cluster">Deploy operator onto the cluster</a></h1>
+<p>In the previous step, we created an operator. Now, we deploy it to the cluster. This involves deploying the namespace and the operator files to the cluster. Create the namespace where you want to deploy the operator with the namespace.yaml file we created in step 2 using this command:</p>
+<pre><code>$ kubectl apply -f config/deploy/namespace.yaml
+</code></pre>
+<p>When the command runs successfully, it returns <code>namespace/craft created</code>. You can check the namespace created by running this command:</p>
+<pre><code>kubectl get namespace
+</code></pre>
+<p>This should display all the existing namespaces, out of which <code>craft</code> is one. Install the operator onto the cluster with this command:</p>
+<pre><code>kubectl apply -f config/deploy/operator.yaml
+</code></pre>
+<p>This will create the required pod in the cluster. We can verify the creation by running:</p>
+<pre><code>kubectl get pods
+</code></pre>
+<p>This returns the wordpress pod along with the other pods running on your machine:</p>
+<pre><code>NAME                                           READY   STATUS         RESTARTS   AGE
+wordpress-controller-manager-8844cf545-gn5rt   1/2     Running           0       11s
+</code></pre>
+<p>Great, your pod is running! You are ready to deploy the resource.</p>
+<hr />
+<p><em><strong>NOTE</strong></em></p>
+<p>If your pod’s status is <code>ContainerCreating</code>, run the command again in a few seconds and the status should change to running.</p>
+<hr />
+<p>Deploy the resource onto the cluster using the wordpress-dev-withoutvault YAML file created by CRAFT.</p>
+<pre><code>kubectl -n craft apply -f config/deploy/wordpress-dev-withoutvault.yaml
+</code></pre>
+<p>This deploys the wordpress resource onto the cluster. To verify, run:</p>
+<pre><code>kubectl -n craft port-forward  svc/wordpress-dev 9090:80
+</code></pre>
+<p>Open <code>http://localhost:9090</code> on the browser and you’ll see the Wordpress application. You can check the logs to see that reconciliation is running as configured. To see that, we can use <a href="https://github.com/wercker/stern">stern</a>.</p>
+<pre><code>stern -n craft .
+</code></pre>
+<h1><a class="header" href="#where-is-the-operator-code" id="where-is-the-operator-code">Where is the Operator Code?</a></h1>
+<p>The source code for the operator is stored in the <code>$GOPATH/src</code> path.</p>
+<pre><code>$ cd $GOPATH/src/wordpress
+$ ls
+
+</code></pre>
+<p>The folder contains all the files required to run an operator like the configurations, API files, controllers, reconciliation files, main files, etc. All these files contain information about the operator and it's runtime characteristics, such as the CRUD logic, reconciliation frequency, etc. These files can be classified in four sections:</p>
+<ol>
+<li>
+<p>Build infrastructure.</p>
+</li>
+<li>
+<p>Launch Configuration.</p>
+</li>
+<li>
+<p>Entry Point</p>
+</li>
+<li>
+<p>Controllers and Reconciler.</p>
+</li>
+</ol>
+<p>CRAFT creates these files when you create an operator. This saves you a few weeks of effort to write and connect your operator.</p>
+<h2><a class="header" href="#build-infrastructure" id="build-infrastructure">Build Infrastructure</a></h2>
+<p>These files are used to build the operator:</p>
+<ul>
+<li>go.mod : A Go module for the project that lists all the dependencies.</li>
+<li>Makefile : File makes targets for building and deploying the controller and reconciler.</li>
+<li>PROJECT : Kubebuilder metadata for scaffolding new components.</li>
+<li>DockerFile : File with instructions on running the operator. Specifies the docker entrypoint for the operator.</li>
+</ul>
+<h2><a class="header" href="#launch-configuration" id="launch-configuration">Launch Configuration</a></h2>
+<p>The launch configurations are in the config/ directory. It holds the CustomResourceDefinitions, RBAC configuration, and WebhookConfigurations. Each folder in config/ contains a refactored part of the launch configuration.</p>
+<ul>
+<li><code>config/default</code> contains a Kustomize base for launching the controller with standard configurations.</li>
+<li><code>config/manager</code> can be used to launch controllers as pods in the cluster</li>
+<li><code>config/rbac</code> contains permissions required to run your controllers under their own service account.</li>
+</ul>
+<h2><a class="header" href="#entry-point" id="entry-point">Entry point</a></h2>
+<p>The basic entry point for the operator is in the main.go file. This file can be used to:</p>
+<ul>
+<li>Set up flags for metrics.</li>
+<li>Initialise all the controller parameters, including the reconciliation frequency and the parameters we received from controller.json and resource.json</li>
+<li>Instantiate a manager to keep track of all the running controllers and clients to the API server.</li>
+<li>Run a manager that runs all of the controllers and keeps track of them until it receives a shutdown signal when it stops all of the controllers.</li>
+</ul>
+<h1><a class="header" href="#controllers-and-reconciler" id="controllers-and-reconciler">Controllers and Reconciler</a></h1>
+<p>A controller is the core of Kubernetes and operators. A controller ensures that, for any given object, the actual state of the world (both the cluster state, and potentially external state like running containers for Kubelet or loadbalancers for a cloud provider) matches the desired state in the object. Each controller focuses on one root API type but may interact with other API types.</p>
+<p>A reconciler tracks changes to the root API type, checks and updates changes in the operator image at controller-runtime. It runs an operation and returns an exit code, and through this process it checks if reconciliation is needed and determines the frequency for reconciliation. Based on the exit code, the next operation is added to the controller queue.</p>
+<p>These are the 14 exit codes that a reconciler can return:</p>
+<pre><code>## ExitCode to state mapping
+  201: &quot;Succeeded&quot;, // create or update
+  202: &quot;AwaitingVerification&quot;, // create or update
+  203: &quot;Error&quot;, // create or update
+  211: &quot;Ready&quot;, // verify
+  212: &quot;InProgress&quot;, // verify
+  213: &quot;Error&quot;, // verify
+  214: &quot;Missing&quot;, // verify
+  215: &quot;UpdateRequired&quot;, // verify
+  216: &quot;RecreateRequired&quot;, // verify
+  217: &quot;Deleting&quot;, // verify
+  221: &quot;Succeeded&quot;, // delete
+  222: &quot;InProgress&quot;, // delete
+  223: &quot;Error&quot;, // delete
+  224: &quot;Missing&quot;, // delete
+</code></pre>
+<h1><a class="header" href="#commands-of-craft" id="commands-of-craft">Commands of CRAFT</a></h1>
+<h3><a class="header" href="#craft-version" id="craft-version">craft version</a></h3>
+<p>Usage : </p>
+<pre><code>craft version
+</code></pre>
+<p>Displays the information about craft, namely version, revision, build user, build date &amp; time, go version. </p>
+<h3><a class="header" href="#craft-init" id="craft-init">craft init</a></h3>
+<p>Usage :</p>
+<pre><code>craft init
+</code></pre>
+<p>Initialises a new project with sample controller.json and resource.json</p>
+<h3><a class="header" href="#craft-create" id="craft-create">craft create</a></h3>
+<p>Usage :</p>
+<pre><code>craft create -c &quot;controller.json&quot; -r &quot;resource.json --podDockerFile &quot;dockerFile&quot; -p
+</code></pre>
+<p>Creates operator source code in $GOPATH/src, builds operator.yaml, builds and pushes operator and resource docker images. </p>
+<h4><a class="header" href="#craft-build" id="craft-build">craft build</a></h4>
+<p>Has 3 sub commands, code, deploy and image. </p>
+<h4><a class="header" href="#build-code" id="build-code">build code</a></h4>
+<p>Usage:</p>
+<pre><code>craft build code -c &quot;controller.json&quot; -r &quot;resource.json
+</code></pre>
+<p>Creates code in $GOPATH/src/operator. </p>
+<h4><a class="header" href="#build-deploy" id="build-deploy">build deploy</a></h4>
+<p>Usage:</p>
+<pre><code>craft build deploy -c &quot;controller.json&quot; -r &quot;resource.json
+</code></pre>
+<p>Builds operator.yaml for deployment onto cluster.</p>
+<h4><a class="header" href="#build-image" id="build-image">build image</a></h4>
+<p>Usage:</p>
+<pre><code>craft build image -b -c &quot;controller.json&quot; --podDockerFile &quot;dockerFile&quot;
+</code></pre>
+<p>Builds operator and resource docker images. </p>
+<h4><a class="header" href="#validate" id="validate">validate</a></h4>
+<p>Usage:</p>
+<pre><code>craft validate -v &quot;operator.yaml&quot;
+</code></pre>
+<p>Validates operator.yaml to see if everything is in shape</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
