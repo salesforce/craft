@@ -8,7 +8,7 @@ CRAFT removes the language barrier to create Kubernetes Operator. CRAFT declares
 2. Kubernetes structural schema validation for a custom resource (CRD) happens within CRAFT while creating an operator.
 3. Craft can be installed as a binary tool. 
 
-These features allow CRAFT to achieve the objectives listed in this [Kubernetes Architecture Design Proposal.] (https://github.com/kubernetes/community/blob/master/contributors/design-proposals/architecture/declarative-application-management.md#bespoke-application-deployment)
+These features allow CRAFT to achieve the objectives listed in this [Kubernetes Architecture Design Proposal.](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/architecture/declarative-application-management.md#bespoke-application-deployment)
 
 ## Demo:
 As an example, we have created [wordpress operator](https://opensource.salesforce.com/craft/tutorial/index.html) that is comparable to one provided by [Presslabs](https://github.com/presslabs/wordpress-operator)
@@ -32,7 +32,7 @@ CRAFT is built with open source projects Kubebuilder and Operatify:
 Check out [documentaion here](https://opensource.salesforce.com/craft/) 
 
 ## Resources
-GitHub Repo: [salesforce/craft]9https://github.com/salesforce/craft).  
+GitHub Repo: [salesforce/craft](https://github.com/salesforce/craft).  
 Slack channel: TBD
 
 ## Contribution
