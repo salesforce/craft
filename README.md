@@ -1,6 +1,6 @@
 # Custom Resource Abstraction Fabrication Tool
 
-CRAFT removes the language barrier to create Kubernetes Operator. CRAFT declares Kubernetes Operators in a robust and generic way for any resource, letting developers focus on CRUD (create, read, update and delete) operations of resource management in a Dockerfile. With CRAFT you can create operators without a dependent layer and in the language of your choice!
+CRAFT removes the language barrier to create Kubernetes Operators. CRAFT declares Kubernetes Operators in a robust and generic way for any resource, letting developers focus on CRUD (create, read, update and delete) operations of resource management in a Dockerfile. With CRAFT you can create operators without a dependent layer and in the language of your choice!
 
 ## Features:
 
