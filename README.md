@@ -16,11 +16,9 @@ As an example, we have created [wordpress operator](https://opensource.salesforc
 ## Advantages
 1. **Easy onboarding** : Create an operator in your language of choice.
 2. **Segregation of duties** : Developers can work in the docker file while the Site Reliability or DevOps engineer can declaratively configure the operator.
-3. **Control access** : Control which users have access to the operator resources.
-4. **Versioning and API interface** : Work on a different version of the operator or resource than your users.
-5. **Save time** : Get schema and input validation feedback before runtime.
-6. **Automated reconciliation** : Automate resource reconciliation to lower your maintenance workload.
-7. **Dependent teams work independently** : Dependent teams can automate independently and create abstraction layers on top of your abstraction.
+3. **Versioning and API interface** : Work on a different version of the operator or resource than your users.
+4. **Validations** : Get schema and input validation feedback before runtime.
+5. **Controlled reconciliation** : Define resource reconciliation frequency to lower your maintenance workload.
 
 ## Built with
 CRAFT is built with open source projects Operatify and Kubebuilder:
