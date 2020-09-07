@@ -16,7 +16,7 @@ As an example, we have created [wordpress operator](https://opensource.salesforc
 ## Advantages
 1. **Easy onboarding** : Create an operator in your language of choice.
 2. **Segregation of duties** : Developers can work in the docker file while the Site Reliability or DevOps engineer can declaratively configure the operator.
-3. **Versioning and API interface** : Work on a different version of the operator or resource than your users.
+3. **Versioning** : Work on a different version of the operator or resource than your users.
 4. **Validations** : Get schema and input validation feedback before runtime.
 5. **Controlled reconciliation** : Define resource reconciliation frequency to lower your maintenance workload.
 
