@@ -3,7 +3,7 @@
 In the previous step, we created an operator. Now, we deploy it to the cluster. This involves deploying the namespace and the operator files to the cluster. Create the namespace where you want to deploy the operator with the namespace.yaml file we created in step 2 using this command:
 
 ```
-$ kubectl apply -f config/deploy/namespace.yaml
+kubectl apply -f config/deploy/namespace.yaml
 ```
 When the command runs successfully, it returns `namespace/craft created`. You can check the namespace created by running this command:
 
