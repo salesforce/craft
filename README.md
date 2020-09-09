@@ -31,7 +31,7 @@ Check out [documentaion here](https://opensource.salesforce.com/craft/)
 
 ## Resources
 GitHub Repo: [salesforce/craft](https://github.com/salesforce/craft).  
-Slack channel: TBD
+Slack channel: [Kubernetes/craft](https://kubernetes.slack.com/archives/C01AD4W4NEP)
 
 ## Contribution
 Please refer [Contribution.md](Contribution.md) before pushing the code. If you wish to make a contribution, create a branch, push your code into the branch and create a PR. For more details, check [this article](https://opensource.com/article/19/7/create-pull-request-github). 
