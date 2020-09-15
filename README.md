@@ -35,3 +35,8 @@ Slack channel: [Kubernetes/craft](https://kubernetes.slack.com/archives/C01AD4W4
 
 ## Contribution
 Please refer [Contribution.md](Contribution.md) before pushing the code. If you wish to make a contribution, create a branch, push your code into the branch and create a PR. For more details, check [this article](https://opensource.com/article/19/7/create-pull-request-github). 
+
+## Acknowledgements
+CRAFT was started by a small team of developers, namely [Harsh Jain](https://github.com/harsh-98), [Anji Devarasetty](https://github.com/anjidevarasetty), [Maheswara Sunil Varma](https://github.com/maheswarasunil) and [Avvari Sai Bharadwaj](https://github.com/AvvariSaiBharadwaj). 
+
+Thanks to all of the amazing contributors, the full list can be found [here](https://github.com/salesforce/craft/graphs/contributors).
