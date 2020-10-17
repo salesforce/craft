@@ -3,6 +3,6 @@ The `operator.yaml` file contains all the metadata required to deploy the operat
 ---
 ***Note***  
 
- Our operator's default user corrently holds the minimum *rbac* required to run the operator and only the operator itself. If you need any more control of the *rbac* add those permissions in the `operator.yaml`.
+ Our operator's default user currently holds the minimum *rbac* required to run the operator and only the operator itself. If you need any more control of the *rbac* add those permissions in the `operator.yaml`.
 
 ---
