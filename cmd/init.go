@@ -6,8 +6,7 @@
 package cmd
 
 import (
-	"fmt"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"os"
 	"path/filepath"
 
@@ -31,8 +30,9 @@ func initCmd() *cobra.Command {
 				log.Fatal(err)
 			}
 
-			utils.CmdExec(fmt.Sprintf("cp -r %s/ %s", initDir, folder),
-				craftDir)
+			cmdString := "svn checkout https://github.com/salesforce/craft/trunk/init"
+			utils.MinCmdExec(cmdString, folder)
+			log.Infof("Created sample controller and resource files")
 		},
 	}
 

@@ -6,28 +6,31 @@
 package cmd
 
 import (
+	"craft/utils"
 	"fmt"
+	log "github.com/sirupsen/logrus"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"io/ioutil"
 	"os"
 	pathLib "path"
 	"path/filepath"
 	"strings"
 	"text/template"
-
-	"craft/utils"
-	log "github.com/sirupsen/logrus"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 var (
 	resourceFile string
+	baseOperator string
 )
 
 func renderTemplate(operatorPath string) {
 	resourceDef := fmt.Sprintf("api/%s/%s_types.go",
 		apiFileObj.Version,
 		strings.ToLower(apiFileObj.Resource))
+
+	utils.MinCmdExec("svn checkout https://github.com/salesforce/craft/trunk/_base-operator", operatorPath)
+	baseOperator = pathLib.Join(operatorPath, "_base-operator")
 
 	dirs := []string{"controllers", "reconciler", "main.go", "Dockerfile", "v1/resource.go", "Makefile"}
 	for _, dir := range dirs {
@@ -62,6 +65,8 @@ func renderTemplate(operatorPath string) {
 			log.Fatal(err)
 		}
 	}
+
+	utils.CmdExec("rm -rf _base-operator", operatorPath)
 }
 
 func cpFile(operatorPath string) {
@@ -140,7 +145,6 @@ func codeBuildCmd() *cobra.Command {
 	cmd.PersistentFlags().StringVarP(&resourceFile, "resourceFile", "r", "", "resourcefile with properties of resource")
 	cmd.MarkPersistentFlagRequired("controllerFile")
 	cmd.MarkPersistentFlagRequired("resourceFile")
-	// cmd.MarkPersistentFlagRequired("environ")
 
 	if err := viper.BindPFlag("controllerFile", cmd.Flags().Lookup("controllerFile")); err != nil {
 		log.Fatal(err)
