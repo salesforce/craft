@@ -363,7 +363,7 @@ spec:
         - --enable-leader-election
         command:
         - /manager
-        image: bhaddu/wordpress-operator:v0.0.1
+        image: craftsf/wordpress-operator:v0.0.1
         name: manager
         resources:
           limits:
@@ -384,6 +384,6 @@ spec:
           name: https
         resources: {}
       imagePullSecrets:
-      - name: docker-registry-credentials
+      - {}
       terminationGracePeriodSeconds: 10
 status: {}
