@@ -43,7 +43,7 @@ func (api *ApiFileStruct) loadApi(path string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	yaml.Unmarshal([]byte(stream), &api)
+	_ = yaml.Unmarshal([]byte(stream), &api)
 
 	api.LeaderElectionID = randomHex()
 }

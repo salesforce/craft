@@ -38,5 +38,7 @@ if [ -n "$VERBOSE" ]; then
 fi
 
 GOBIN=$PWD go build -ldflags "${ldflags}" -o bin/craft main.go
-GOBIN=$PWD env GOOS=linux GOARCH=amd64 go build -ldflags "${ldflags}" -o bin/craft_amd64 main.go
+GOBIN=$PWD env GOOS=linux GOARCH=amd64 go build -ldflags "${ldflags}" -o bin/craft_linux main.go
+GOBIN=$PWD env GOOS=darwin GOARCH=amd64 go build -ldflags "${ldflags}" -o bin/craft_darwin main.go
+GOBIN=$PWD env GOOS=windows GOARCH=amd64 go build -ldflags "${ldflags}" -o bin/craft_windows main.go
 exit 0

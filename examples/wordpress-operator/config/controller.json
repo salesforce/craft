@@ -5,9 +5,9 @@
   "domain": "example.com",
   "namespace": "craft",
   "version": "v1",
-  "operator_image": "craftsf/wordpress-operator:v0.0.1",
-  "image": "craftsf/wordpress:v0.0.1",
-  "imagePullSecrets": "",
+  "operator_image": "bhaddu/wordpress-operator:v0.0.1",
+  "image": "bhaddu/wordpress:v0.0.1",
+  "imagePullSecrets": "docker-registry-credentials",
   "imagePullPolicy": "IfNotPresent",
   "cpu_limit": "500m",
   "memory_limit": "200Mi"
