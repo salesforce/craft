@@ -57,6 +57,7 @@ func init() {
 		initCmd(),
 		validateCmd(),
 		buildCmd(),
+		updateCmd(),
 	)
 	rootCmd.PersistentFlags().StringVarP(&craftDir, "craftDir", "C", craftInstallPath, "craft dir")
 	rootCmd.PersistentFlags().MarkHidden("craftDir")
