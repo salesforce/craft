@@ -19,14 +19,14 @@ func VersionCmd() *cobra.Command {
 		Short: "Displays the version of the current build of craft",
 		Long:  `Displays the version of the current build of craft`,
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Printf(base.VersionStr,
-				base.Info["version"],
-				base.Info["revision"],
-				base.Info["branch"],
-				base.Info["buildUser"],
-				base.Info["buildDate"],
-				base.Info["goVersion"])
-			os.Exit(0)
+				fmt.Printf(base.VersionStr,
+					base.Info["version"],
+					base.Info["revision"],
+					base.Info["branch"],
+					base.Info["buildUser"],
+					base.Info["buildDate"],
+					base.Info["goVersion"])
+				os.Exit(0)
 		},
 	}
 

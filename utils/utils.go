@@ -60,6 +60,22 @@ func CmdExec(cmdStr, dir string) {
 		log.Fatal(err)
 	}
 }
+
+func MinCmdExec(cmdStr, dir string) {
+	log.Debugf("$(%s): %s", dir, cmdStr)
+	cmdList := strings.Split(cmdStr, " ")
+
+	out := exec.Command(cmdList[0], cmdList[1:]...)
+	out.Dir = dir
+	out.Env = os.Environ()
+	stdoutStderr, err := out.CombinedOutput()
+	log.Debug("%s", stdoutStderr)
+	if err != nil {
+		MinCmdExec(cmdStr, dir)
+		//log.Fatal(err)
+	}
+}
+
 func EnvCmdExec(cmdStr, dir string, env []string) {
 	log.Debugf("$(%s): %s", dir, cmdStr)
 	log.Debugf("env %s", env)
@@ -78,6 +94,22 @@ func EnvCmdExec(cmdStr, dir string, env []string) {
 	}
 
 }
+
+func ReturnCmdExec(cmdStr, dir string) string{
+	log.Debugf("$(%s): %s", dir, cmdStr)
+	cmdList := strings.Split(cmdStr, " ")
+
+	out := exec.Command(cmdList[0], cmdList[1:]...)
+	out.Dir = dir
+	out.Env = os.Environ()
+	stdoutStderr, err := out.CombinedOutput()
+	log.Infof("%s", stdoutStderr)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return string(stdoutStderr)
+}
+
 func Exists(path string) {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		log.Fatal(err)

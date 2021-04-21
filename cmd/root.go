@@ -7,7 +7,6 @@ package cmd
 
 import (
 	"os"
-	pathLib "path"
 	"path/filepath"
 	"strings"
 
@@ -23,8 +22,6 @@ var (
 	craftInstallPath = "/usr/local/craft"
 	goSrc            = os.ExpandEnv("$GOPATH/src")
 	craftDir         string
-	initDir          string
-	baseOperator     string
 	debug            bool
 )
 
@@ -34,8 +31,6 @@ func setCraftDir() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	baseOperator = pathLib.Join(craftDir, "_base-operator")
-	initDir = pathLib.Join(craftDir, "init")
 
 	log.Info("CraftDir: ", craftDir)
 }
@@ -62,6 +57,7 @@ func init() {
 		initCmd(),
 		validateCmd(),
 		buildCmd(),
+		updateCmd(),
 	)
 	rootCmd.PersistentFlags().StringVarP(&craftDir, "craftDir", "C", craftInstallPath, "craft dir")
 	rootCmd.PersistentFlags().MarkHidden("craftDir")

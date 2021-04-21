@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 
 	"craft/utils"
 	log "github.com/sirupsen/logrus"
@@ -64,27 +65,45 @@ func createCmd() *cobra.Command {
 			if err != nil {
 				log.Fatal(err)
 			}
+			total := time.Now()
 			fmt.Println("Creating operator in $GOPATH/src")
+			start := time.Now()
 			cmdString := fmt.Sprintf("craft build code -c %s -r %s", apiFile, resourceFile)
 			utils.CmdExec(cmdString, pwd)
+			elapsed:= time.Since(start)
+			fmt.Println("Created operator in $GOPATH/src in", elapsed.Round(time.Second).String())
 
 			fmt.Println("Building operator.yaml for deployment")
+			start = time.Now()
 			cmdString = fmt.Sprintf("craft build deploy -c %s -r %s", apiFile, resourceFile)
 			utils.CmdExec(cmdString, pwd)
+			elapsed = time.Since(start)
+			fmt.Println("Built operator.yaml for deployment in", elapsed.Round(time.Second).String())
 
 			fmt.Println("Building operator and resource docker images")
+			start = time.Now()
 			cmdString = fmt.Sprintf("craft build image -b -c %s --podDockerFile %s", apiFile, podDockerFile)
 			utils.CmdExec(cmdString, pwd)
+			elapsed = time.Since(start)
+			fmt.Println("Built operator and resource docker images in", elapsed.Round(time.Second).String())
 
 			if dockerPush {
 				fmt.Println("Pushing operator image to docker")
+				start = time.Now()
 				cmdString = fmt.Sprintf("docker push %s", apiFileObj.OperatorImage)
 				utils.CmdExec(cmdString, pwd)
+				elapsed = time.Since(start)
+				fmt.Println("Pushed operator image to docker in", elapsed.Round(time.Second).String())
 
 				fmt.Println("Pushing resource image to docker")
+				start = time.Now()
 				cmdString = fmt.Sprintf("docker push %s", apiFileObj.Image)
 				utils.CmdExec(cmdString, pwd)
+				elapsed = time.Since(start)
+				fmt.Println("Pushed resource image to docker in", elapsed.Round(time.Second).String())
 			}
+			totalTime := time.Since(total)
+			fmt.Println("Total time required for completion is", totalTime.Round(time.Second).String())
 		},
 	}
 
